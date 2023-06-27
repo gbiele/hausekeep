@@ -173,7 +173,7 @@ normWithin <- function (data = NULL, idvar, measurevar, betweenvars = NULL, na.r
 #' ChickWeight2$weight2 <- ChickWeight2$weight * 100 # create a new outcome variable
 #' result <- seWithin(data = ChickWeight2, measurevar = c("weight", "weight2"),
 #' betweenvars = "Diet", withinvars = "Time", idvar = "Chick")
-seWithin <- function (data = NULL, measurevar, betweenvars = NULL, withinvars = NULL, idvar = NULL, na.rm = TRUE, conf.interval = 0.95, shownormed = FALSE) {
+seWithin <- function (data = NULL, measurevar, betweenvars = NULL, withinvars = NULL, idvar = NULL, na.rm = TRUE, conf.interval = 0.95, shownormed = FALSE, message.conflevel = FALSE) {
   # within-subjects CI (normed and un-normed versions)
   ## Summarizes data, handling within-subjects variables by removing inter-subject variability.
   ## It will still work if there are no within-S variables.
@@ -267,7 +267,8 @@ seWithin <- function (data = NULL, measurevar, betweenvars = NULL, withinvars = 
     }
 
     resultsList[[measurevar[i]]] <- data.table::data.table(merged)
-    message(cat("Confidence intervals: ", conf.interval, sep = ""))
+    if (message.conflevel == TRUE)
+      message(cat("Confidence intervals: ", conf.interval, sep = ""))
 
   }
 
